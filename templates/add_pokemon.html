@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Pokemon</title>
+</head>
+<body>
+    <h1>Add a Pokemon</h1>
+    <form id="pokemonForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="moves">Moves (comma-separated):</label>
+        <input type="text" id="moves" name="moves" required><br><br>
+
+        <button type="button" onclick="addPokemon()">Add Pokemon</button>
+    </form>
+
+    <script>
+        function addPokemon() {
+            var name = document.getElementById("name").value;
+            var moves = document.getElementById("moves").value.split(",");
+            var data = {
+                pokemon: name,
+                moves: moves
+            };
+
+            fetch('/todo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Pokemon added successfully!');
+                } else {
+                    alert('Failed to add Pokemon.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred.');
+            });
+        }
+    </script>
+</body>
+</html>

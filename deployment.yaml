@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pokeapp
+  labels:
+    app: pokeapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pokeapp
+  # pod spec begins here
+  template:
+    metadata:
+      labels:
+        app: pokeapp
+    spec:
+      containers:
+        - name: pokeapp
+          image: registry.digitalocean.com/pokemon-registry/pokemon-app:0.0.6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8888
+
